@@ -1,0 +1,56 @@
+<div class="row">
+    <div class = "col-md-4">
+        <u>Que le gustaria hacer ?</u>
+    </div>
+</div>
+<br>
+<div class="row">
+    <form #formularioDelete = "ngForm" (ngSubmit) = "deleteUsuario(formularioDelete)">
+
+        <div>
+            <input
+                type="text"
+                class="formulario"
+                name="ID_usuario"
+                placeholder="Introduzca el ID a eliminar" 
+                [(ngModel)]="usuarioTienda.recogeDatos2.ID_usuario" 
+                :required   
+                />
+
+                <br>
+            <button class="btn btn-primary mr-2">Borrar usuario</button>
+        </div>
+    </form>
+</div>
+<br> <br>
+
+<div class="row">
+    <form #formularioPost = "ngForm" (ngSubmit) = "postUsuario(formularioPost)">
+
+        <div class="formulario">
+            <input
+                type="text"
+                class="formulario-control"
+                name="ID_usuario"
+                placeholder="Introduzca el ID" 
+                [(ngModel)]="usuarioTienda.recogeDatos.ID_usuario" 
+                :required   
+                />
+
+            <br>
+            <input
+                type="text"
+                class="formulario-control"
+                name="rol"
+                placeholder="Introduzca el rol" 
+                [(ngModel)]="usuarioTienda.recogeDatos.rol" 
+            />
+
+        </div>
+        <br>
+        <button class="btn btn-primary mr-2">Crear usuario</button>
+
+    </form>
+    <br> <br>
+</div> 
+

@@ -1,0 +1,321 @@
+<div class="row">
+    <div class = "col-md-4">
+        <u>Que le gustaria hacer ?</u>
+    </div>
+</div>
+<br>
+
+
+<div>
+    <h1>Historial de compras</h1>
+    <button (click)= "getHistorial()" class ="btn btn-primary mr">Mostrar/Ocultar historial</button>
+    <div *ngIf="historial==true; then ifBloquea else elseBloquea"></div>
+    <ng-template #ifBloquea >
+        <div>
+            <form #formularioParaBuscarAltasCumbias= "ngForm" (ngSubmit) = "getBuscaComprador(compraTienda.busquedaComprador.nombre_comprador)">
+                                            
+                    <div class="formulario">
+                        <h2>Filtrar compras por nombre del comprador</h2>
+                                        
+                            <input
+                                type="text"
+                                class="formulario-control"
+                                name="nombre_comprador"
+                                placeholder="Introduzca el nombre" 
+                                [(ngModel)]="compraTienda.busquedaComprador.nombre_comprador" 
+                                :required  
+                            />
+                            <button class="btn btn-primary mr-2">Buscar articulos</button>
+                            
+                    </div>
+                </form>
+                <button (click)= "getDevuelveHistorial()" class="btn btn-primary mr-2">Mostrar todo</button>
+            </div>
+                            
+        <div class = "tabla1">
+            <table class = "table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID_cliente</th>
+                        <th>cantidad</th>
+                        <th>nombre_comprador</th>
+                        <th>calle</th>
+                        <th>localidad</th>
+                        <th>provincia</th>
+                        <th>codigo postal</th>
+                        <th>referencia del articulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let compra of compraTienda.compra">
+                        <td>{{ compra.ID_cliente }}</td>
+                        <td>{{ compra.cantidades }}</td>
+                        <td>{{ compra.nombre_comprador }}</td>
+                        <td>{{ compra.direccion_envio.calle }}</td>
+                        <td>{{ compra.direccion_envio.localidad  }}</td>
+                        <td>{{ compra.direccion_envio.provincia  }}</td>
+                        <td>{{ compra.direccion_envio.cp  }}</td>
+                        <td>{{ compra.ID_Articulo }}</td>
+                        <td>
+                            <button (click)="deleteArticulo(compra._id, compra.cantidades, compra.ID_Articulo)" class="btn btn-primary mr-2">
+                                <i>Borrar</i>
+                            </button>
+                        </td>
+                        <td>
+                            <button (click)="putCompra(compra)" class="btn btn-primary mr-2">
+                                <i>Actualizar</i>
+                            </button>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+         <div>
+                                    <form #formularioActualiza = "ngForm" (ngSubmit) = "editaCompra(formularioActualiza)">
+
+                                        <input type="hidden" name="_id" [(ngModel)]="compraTienda.actualizaDatos._id">
+                                            
+                                        <div class="formulario">
+
+                                            <br>
+                                        
+                                            <input
+                                                type="text"
+                                                class="formulario-control"
+                                                name="nombre_comprador"
+                                                placeholder="Introduzca su nombre" 
+                                                [(ngModel)]="compraTienda.actualizaDatos.nombre_comprador" 
+                                                :required  
+                                            />
+                                            <br>
+                                             <input
+                                                type="text"
+                                                class="formulario-control"
+                                                name="calle"
+                                                placeholder="Introduzca su calle" 
+                                                [(ngModel)]="compraTienda.actualizaDatos.direccion_envio.calle" 
+                                                :required  
+                                            />
+                                            <br>
+
+                                            <input
+                                                type="text"
+                                                class="formulario-control"
+                                                name="localidad"
+                                                placeholder="Introduzca su localidad" 
+                                                [(ngModel)]="compraTienda.actualizaDatos.direccion_envio.localidad" 
+                                                :required  
+                                            />
+                                            <br>
+
+                                            <input
+                                                type="text"
+                                                class="formulario-control"
+                                                name="provincia"
+                                                placeholder="Introduzca su provincia" 
+                                                [(ngModel)]="compraTienda.actualizaDatos.direccion_envio.provincia" 
+                                                :required  
+                                            />
+                                            <br>
+
+                                            <input
+                                                type="text"
+                                                class="formulario-control"
+                                                name="cp"
+                                                placeholder="Introduzca su codigo postal" 
+                                                [(ngModel)]="compraTienda.actualizaDatos.direccion_envio.cp" 
+                                                :required  
+                                            />
+                                            <br>
+                                            <button class="btn btn-primary mr-2">Actualizar compra</button>
+
+                                        </div>
+                                     </form>
+                                </div>
+
+                                <br>
+                                <hr>
+    </ng-template>
+    <ng-template #elseBloquea></ng-template>
+
+</div>
+
+<br>
+<div>
+    <h1>Filtrar articulos por año academico</h1>
+    <form #formularioBusqueda = "ngForm" (ngSubmit) = "getArticuloPorAno(compraTienda.recogeFiltro.curso_academico.curso, compraTienda.recogeFiltro.curso_academico.cuatri)">
+        <div>
+            <input
+                type="text"
+                class="formulario"
+                name="curso"
+                placeholder="Introduzca curso" 
+                [(ngModel)]="compraTienda.recogeFiltro.curso_academico.curso" 
+                :required
+            />
+
+            <input
+                type="text"
+                class="formulario"
+                name="cuatri"
+                placeholder="Introduzca cuatrimestre" 
+                [(ngModel)]="compraTienda.recogeFiltro.curso_academico.cuatri" 
+                :required
+                
+            />
+            <button class="btn btn-primary mr-2">Buscar articulos</button>
+
+        </div>
+    </form>
+</div>
+
+<div>
+    <form #formularioBusquedaId = "ngForm" (ngSubmit) = "getArticuloPorId(compraTienda.recogeFiltro._id)">
+        <div>
+            <input
+                type="text"
+                class="formulario"
+                name="_id"
+                placeholder="Introduzca id de mongo" 
+                [(ngModel)]="compraTienda.recogeFiltro._id" 
+                :required
+            />
+
+            <button class="btn btn-primary mr-2">Buscar por id</button>
+
+        </div>
+    </form>
+    <button (click)= "getTienda()" class="btn btn-primary mr-2">Mostrar todo</button>
+</div>
+
+<h1>Articulos disponibles</h1>
+<div class = "col-md-8">
+    <table class = "table table-striped">
+        <thead>
+            <tr>
+                <th>asignatura</th>
+                <th>curso</th>
+                <th>cuatri</th>
+                <th>profesor</th>
+                <th>departamento</th>
+                <th>idioma</th>
+                <th>autor</th>
+                <th>tipo</th>
+                <th>cantidad</th>
+                <th>precio</th>
+                <th>referencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let articulo of compraTienda.articulo">
+                <td>{{ articulo.asignatura }}</td>
+                <td>{{ articulo.curso_academico.curso }}</td>
+                <td>{{ articulo.curso_academico.cuatri }}</td>
+                <td>{{ articulo.profesorado.profesor }}</td>
+                <td>{{ articulo.profesorado.departamento }}</td>
+                <td>{{ articulo.idioma }}</td>
+                <td>{{ articulo.autor }}</td>
+                <td>{{ articulo.tipo }}</td>
+                <td>{{ articulo.cantidad }}</td>
+                <td>{{ articulo.precio }}</td>
+                <td>{{ articulo._id }}</td>
+                <td>
+                    <button (click)="despliegaCompra(articulo)" class="btn btn-primary mr-2">
+                        <i>Comprar</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    
+    <div *ngIf="comprar==true; then ifBlock else elseBlock"></div>
+        <ng-template #ifBlock>
+            <h1>Datos de compra</h1>
+            <div>
+                <form #formularioPost = "ngForm" (ngSubmit) = "postCompra(formularioPost)">
+
+                    <input type="hidden" name="_id" [(ngModel)]="compraTienda.recogeDatos._id">
+
+                    <input type="hidden" name="ID_Articulo" [(ngModel)]="compraTienda.recogeBusqueda._id">
+                                            
+                    <div class="formulario">
+                       
+                        <input
+                            type="text"
+                            class="formulario-control"
+                            name="nombre_comprador"
+                            placeholder="Introduzca su nombre" 
+                            [(ngModel)]="compraTienda.recogeDatos.nombre_comprador" 
+                            :required  
+                        />
+                        <br>
+
+                        <input
+                            type="text"
+                            class="formulario-control"
+                            name="calle"
+                            placeholder="Introduzca su calle" 
+                            [(ngModel)]="compraTienda.recogeDatos.direccion_envio.calle" 
+                            :required  
+                        />
+                        <br>
+
+                        <input
+                            type="text"
+                            class="formulario-control"
+                            name="localidad"
+                            placeholder="Introduzca su localidad" 
+                            [(ngModel)]="compraTienda.recogeDatos.direccion_envio.localidad" 
+                            :required  
+                        />
+                        <br>
+
+                        <input
+                            type="text"
+                            class="formulario-control"
+                            name="provincia"
+                            placeholder="Introduzca su provincia" 
+                            [(ngModel)]="compraTienda.recogeDatos.direccion_envio.provincia" 
+                            :required  
+                        />
+                        <br>
+
+                        Codigo postal:
+                        <input
+                            type="number"
+                            class="formulario-control"
+                            name="cp"
+                            placeholder="Introduzca su codigo postal" 
+                            [(ngModel)]="compraTienda.recogeDatos.direccion_envio.cp" 
+                            :required  
+                        />
+                        <br>
+                        
+                        Cantidad:
+                        <input 
+                            type="number"
+                            class="formulario-control"
+                            name="cantidades"
+                            placeholder="Introduzca cantidad" 
+                            [(ngModel)]="compraTienda.recogeDatos.cantidades" 
+                            :required  
+                        />
+                        <br>
+                        
+                        </div>
+                        <br>
+                        <button class="btn btn-primary mr-2">Finalizar compra</button>
+                </form>
+            </div>
+            <br>
+        </ng-template>
+
+
+
+        <ng-template #elseBlock></ng-template>
+</div>
+

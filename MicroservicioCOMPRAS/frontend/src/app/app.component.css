@@ -1,0 +1,10 @@
+body {background-color: rgb(106, 214, 241);}
+
+h1{
+     font-family: Arial, Helvetica, sans-serif;
+     text-align: center;
+     font-size: 30pt;
+     font-style: oblique;
+     text-decoration: underline;
+     align-content: flex-start;
+}

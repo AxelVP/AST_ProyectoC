@@ -1,0 +1,25 @@
+<div class="row">
+    <div class = "col-md-4">
+        <h1>Introduzca su ID</h1>
+    </div>
+</div>
+<br>
+
+<div class= "row">
+    <form #formularioIdentificar = "ngForm" (ngSubmit) = "comprobarUsuario(controlUsuario.recogeUsuario.ID_usuario)">
+        <div>
+            <input 
+                type="text"
+                class="formulario"
+                name="identificador"
+                [(ngModel)]="controlUsuario.recogeUsuario.ID_usuario" 
+                :required
+            />
+            <button class="btn btn-primary mr-2">Loggin</button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="esAdmin==true; then ifBlock else elseBlock"></div>
+    <ng-template #ifBlock><app-articulos></app-articulos></ng-template>
+    <ng-template #elseBlock></ng-template>
